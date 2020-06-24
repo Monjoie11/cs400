@@ -134,7 +134,8 @@ void LinkedList<T>::insertOrdered(const T& newData) {
   as the function argument "other". The function does NOT change either
   of the original lists directly, as the inputs are marked const.
   Instead, this function makes a new list containing the merged result,
-  and it returns a copy of the new list. For example, one usage might
+  and it returns a copy of the new list. For example, one
+   usage might
   look like this (OUTSIDE of this function, where we are making the call):
 
   LinkedList<int> leftList;
@@ -211,7 +212,55 @@ LinkedList<T> LinkedList<T>::merge(const LinkedList<T>& other) const {
   LinkedList<T> merged;
 
   // -----------------------------------------------------------
-  // TODO: Your code here!
+
+  //grabbing list sizes to determine next steps
+  int lefty = left.size();
+  int righty = right.size();
+
+ //check and see if either or both are size 0, if so we have nothing to merge
+
+  if(lefty < 1 && righty < 1){
+    return left;
+  } else if(lefty < 1){
+    return right;
+  } else if(righty < 1) {
+    return left;
+  }
+   
+  //pull from the front of which ever list has a smaller head pushback on merged
+  //until one list is empty
+  while(left.size() > 0 && right.size() > 0){
+   if(left.front() <= right.front()){
+    merged.pushBack(left.front());
+    left.popFront();
+   } else {
+    merged.pushBack(right.front());
+    right.popFront();
+   }
+  }
+  
+  //we know the the nodes in whichever list isn't empty are bigger than all on merged
+  //so we just stick the list on the back till it's empty
+  if(left.size() > 0){
+    while (left.size() > 0){
+      merged.pushBack(left.front());
+      left.popFront();
+    }   
+  } else{
+    while(right.size() > 0){
+      merged.pushBack(right.front());
+       right.popFront();
+    }
+  }
+
+
+  //size is the size of starting lists
+  merged.size_ = lefty + righty;
+  return merged;
+
+
+  
+  
   // -----------------------------------------------------------
   // Please implement this function according to the description
   // above and in the instructions PDF.
