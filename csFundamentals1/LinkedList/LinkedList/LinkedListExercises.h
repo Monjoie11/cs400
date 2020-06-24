@@ -81,53 +81,40 @@
 template <typename T>
 void LinkedList<T>::insertOrdered(const T& newData) {
 
+  
   // -----------------------------------------------------------
-  // TODO: Your code here!
-  // -----------------------------------------------------------
-  // Please implement this function according to the description
-  // above and in the instructions PDF.
-
-  // Hints:
-  // Make your new node on the heap and then find where it needs to
-  // go in the list. A good way to do this is by considering special
-  // base cases first, then walk the list from front to back and find
-  // the earliest position where you should insert the new node.
   
-  // When you insert the node, make sure to update any and all pointers
-  // between it and adjacent nodes accordingly (next and prev pointers).
-  // You may also need to update the head_ and tail_ pointers in some
-  // cases. Also update the size_ variable of the list.
 
-  // There are explicit examples of how to do all those things in the
-  // other provided code for this project!
-
-  // More hints:
   
-  // First, practice your technique for traversing the list from front
-  // to back. You can see examples of several ways to do this throughout
-  // the provided code for this project. We recommend that you try using
-  // a temporary pointer that you update to track your position as you
-  // traverse from node to node.
-  
-  // Consider all the cases that can happen when you're trying to insert
-  // the new node. Is the list currently empty? Does the new node go
-  // at the beginning? Does it go somewhere in the middle? Does it go
-  // at the end? Remember that this is a doubly-linked list, so there
-  // may be prev and next pointers to adjust on both sides of the node
-  // that you insert.
-
-  // Be careful to make your conditional cases mutually exclusive when
-  // necessary. Are you using "else" where you should?
-
-  // Don't dereference a null pointer, ever! Always make sure the logic
-  // checks for that before dereferencing. This is the most common cause
-  // of crashes. The test program will show you which test cases are
-  // causing you issues with that. A common issue is that when students
-  // traverse an empty list or when they traverse to the end of the list,
-  // they don't handle the null pointer at the tail properly. Be careful
-  // to update all next, prev, head_, and tail_ pointers as needed on your
-  // new node or on those existing nodes that are adjacent to the new node.
-
+ Node* newNode = new Node(newData);
+  if (this->empty()){
+    head_ = newNode;
+    tail_ = newNode;
+    newNode->next = nullptr;
+    newNode->prev = nullptr;
+  } else if (newNode->data < head_->data){
+    Node* cur = head_;
+    cur->prev = newNode;
+    newNode->next = cur;
+    head_ = newNode;
+  } else if (newNode->data > tail_->data){
+    Node* cur = tail_;
+    cur->next = newNode;
+    newNode->prev = cur;
+    tail_ = newNode;
+  } else {
+    Node* cur = head_->next;
+    while (newNode->data > cur->data){
+      cur = cur->next;
+    }
+    newNode->prev = cur->prev;
+    newNode->next = cur;
+    Node* insPoint = cur->prev;
+    insPoint->next = newNode;
+    cur->prev = newNode;
+  }
+    
+  size_++;
 }
 
 /********************************************************************
