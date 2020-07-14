@@ -87,16 +87,16 @@
 // tree is edited in-place by reference.
 static void treeFactory(GenericTree<int>& tree) {
 
-  //      *****************************************************
-  //                           EXERCISE 1
-  //    TODO: Your work here! You should edit this function body!
-  //      *****************************************************
 
-  // Edit the function body only. You should leave the function header alone.
-  // Build the contents of tree so that it matches the diagram above
-  // when you print it out. The main() function runs that test for you.
 
-  // ...
+tree.clear();
+tree.createRoot(4);
+GenericTree<int>::TreeNode* daRoot = tree.getRootPtr();
+GenericTree<int>::TreeNode* eight = daRoot->addChild(8);
+GenericTree<int>::TreeNode* fifteen = daRoot->addChild(15);
+GenericTree<int>::TreeNode* sixteen = eight->addChild(16);
+GenericTree<int>::TreeNode* twothree = eight->addChild(23);
+GenericTree<int>::TreeNode* fourtwo = sixteen->addChild(42);
 
 }
 
