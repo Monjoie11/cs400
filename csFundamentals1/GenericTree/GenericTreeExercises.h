@@ -86,9 +86,6 @@
 // properly destroyed first. There is no need to return a value because the
 // tree is edited in-place by reference.
 static void treeFactory(GenericTree<int>& tree) {
-
-
-
 tree.clear();
 tree.createRoot(4);
 GenericTree<int>::TreeNode* daRoot = tree.getRootPtr();
@@ -97,7 +94,6 @@ GenericTree<int>::TreeNode* fifteen = daRoot->addChild(15);
 GenericTree<int>::TreeNode* sixteen = eight->addChild(16);
 GenericTree<int>::TreeNode* twothree = eight->addChild(23);
 GenericTree<int>::TreeNode* fourtwo = sixteen->addChild(42);
-
 }
 
 // treeFactoryTest: This function demonstrates the execution of treeFactory
@@ -313,18 +309,37 @@ std::vector<T> traverseLevels(GenericTree<T>& tree) {
 
   auto rootNodePtr = tree.getRootPtr();
   if (!rootNodePtr) return results;
+//-------------------------------------------------------------------------------------------------------------------------
 
-  //      *****************************************************
-  //                           EXERCISE 2
-  //    TODO: Your work here! You should edit this function body!
-  //      *****************************************************
 
-  // Perform a level-order traversal and record the data of the nodes in
-  // the results vector. They should be placed in the vector in level order.
-  // Remember that you can add a copy of an item to the back of a std::vector
-  // with the .push_back() member function.
+  std::queue<TreeNode*> nodesToExplore;
 
-  // ...
+  nodesToExplore.push(rootNodePtr);
+
+  while (!nodesToExplore.empty()) {
+
+    // Make a copy of the top pointer on the stack, then pop it to decrease the stack
+    TreeNode* topNode = nodesToExplore.front();
+  
+    nodesToExplore.pop();
+
+    if (!topNode) {
+      continue;
+    } else {
+       results.push_back(topNode->data);
+        for (auto childPtr : topNode->childrenPtrs) {
+        nodesToExplore.push(childPtr);
+      }
+    }
+
+    // If the node exists, it may have children pointers. Let's iterate
+    // through the childrenPtrs vector and push copies of those pointers
+    // onto the exploration stack.
+    
+
+  }
+
+  
 
   return results;
 }
