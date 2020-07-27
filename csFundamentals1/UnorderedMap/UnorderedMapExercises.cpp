@@ -54,7 +54,7 @@ StringIntMap makeWordCounts(const StringVec& words) {
   StringIntMap wordcount_map;
 
   std::vector<std::string> newWords = words;
-  int targetIndex = 0;
+  unsigned targetIndex = 0;
   int counter = 0;
   
 
@@ -68,7 +68,7 @@ StringIntMap makeWordCounts(const StringVec& words) {
     continue;
   }
 
-  for(int i = targetIndex; i < newWords.size(); i++){
+  for(unsigned i = targetIndex; i < newWords.size(); i++){
     if(newWords[i] == currentWord){
       counter++;
       newWords[i] = "";
@@ -76,7 +76,7 @@ StringIntMap makeWordCounts(const StringVec& words) {
   }
 
   targetIndex++;
-  std::pair<std::string, int>  targetPair = std::make_pair(currentWord, counter);
+ //std::pair<std::string, int>  targetPair = std::make_pair(currentWord, counter);
  // std::cout << currentWord << counter << std::endl;
   wordcount_map.insert({currentWord, counter});
   counter = 0;
@@ -239,7 +239,7 @@ int memoizedLongestPalindromeLength(LengthMemo& memo, const std::string& str, in
     // new in this case. So, we also won't store anything new in the table in
     // this case, only return what's already stored at this key in the map.
 
-    return -1337; // Hint: You need to change this!
+    return memo.at(pairKey); 
     // ====================================================================
 
   }
@@ -345,8 +345,9 @@ int memoizedLongestPalindromeLength(LengthMemo& memo, const std::string& str, in
 
   // =======================================================================
   // EXERCISE 3 - PART B - YOUR CODE HERE!
-  //
-  return -1337; // Hint: You need to change this!
+
+  memo[pairKey] = greaterResult;
+  return greaterResult; // Hint: You need to change this!
   // =======================================================================
 }
 
