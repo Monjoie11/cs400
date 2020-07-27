@@ -318,7 +318,7 @@ std::vector<T> traverseLevels(GenericTree<T>& tree) {
 
   while (!nodesToExplore.empty()) {
 
-    // Make a copy of the top pointer on the stack, then pop it to decrease the stack
+    
     TreeNode* topNode = nodesToExplore.front();
   
     nodesToExplore.pop();
@@ -331,11 +331,6 @@ std::vector<T> traverseLevels(GenericTree<T>& tree) {
         nodesToExplore.push(childPtr);
       }
     }
-
-    // If the node exists, it may have children pointers. Let's iterate
-    // through the childrenPtrs vector and push copies of those pointers
-    // onto the exploration stack.
-    
 
   }
 

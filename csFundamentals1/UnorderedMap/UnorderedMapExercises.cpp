@@ -53,9 +53,34 @@
 StringIntMap makeWordCounts(const StringVec& words) {
   StringIntMap wordcount_map;
 
-  // =================================================
-  // EXERCISE 1 WORKSPACE: YOUR CODE HERE
-  // =================================================
+  std::vector<std::string> newWords = words;
+  int targetIndex = 0;
+  int counter = 0;
+  
+
+  while(targetIndex < newWords.size() ){
+
+  std::string currentWord = newWords[targetIndex];
+    
+
+  if(currentWord == ""){
+    targetIndex++;
+    continue;
+  }
+
+  for(int i = targetIndex; i < newWords.size(); i++){
+    if(newWords[i] == currentWord){
+      counter++;
+      newWords[i] = "";
+    }
+  }
+
+  targetIndex++;
+  std::pair<std::string, int>  targetPair = std::make_pair(currentWord, counter);
+ // std::cout << currentWord << counter << std::endl;
+  wordcount_map.insert({currentWord, counter});
+  counter = 0;
+  }
 
   return wordcount_map;
 }
@@ -97,11 +122,11 @@ StringIntMap makeWordCounts(const StringVec& words) {
 
 int lookupWithFallback(const StringIntMap& wordcount_map, const std::string& key, int fallbackVal) {
 
-  // =================================================
-  // EXERCISE 2 WORKSPACE: YOUR CODE HERE
-  // =================================================
+  if(wordcount_map.count(key)){
+    return wordcount_map.at(key);
+  }
 
-  return -1337; // Change this!
+  return fallbackVal;
 }
 
 
