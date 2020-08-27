@@ -538,7 +538,53 @@ std::list<PuzzleState> puzzleBFS(const PuzzleState& start, const PuzzleState& go
     // We'll need to loop over the neighbors that are the points adjacent to curState.
     // We need a collection of neighbors we're going to loop over.
     
-    auto neighbors = {start}; // Change this! This line is totally wrong.
+    std::unordered_set<PuzzleState> neighbors;
+    int blankIndex = curState.getBlankIndex();
+
+
+
+    if (blankIndex <= 5){
+    auto outputState = curState;
+    auto dataArray = outputState.getData();
+    int downIndex = blankIndex + 3;
+    std::swap(dataArray[downIndex], dataArray[blankIndex]);
+    outputState.setData(dataArray);
+    neighbors.insert(outputState);
+    }
+
+    if (blankIndex >= 3) {
+    int upIndex = blankIndex-3;
+    auto outputState = curState;
+    auto dataArray = outputState.getData();
+    std::swap(dataArray[upIndex], dataArray[blankIndex]);
+    outputState.setData(dataArray);
+    neighbors.insert(outputState);
+    }
+
+
+    if(blankIndex % 3 != 0){
+    int leftIndex = blankIndex-1;
+    auto outputState = curState;
+    auto dataArray = outputState.getData();
+    std::swap(dataArray[leftIndex], dataArray[blankIndex]);
+    outputState.setData(dataArray);
+    neighbors.insert(outputState);
+    } 
+    
+    
+    if(blankIndex % 3 != 2) {
+    int rightIndex = blankIndex + 1;
+    auto outputState = curState;
+    auto dataArray = outputState.getData();
+    std::swap(dataArray[rightIndex], dataArray[blankIndex]);
+    outputState.setData(dataArray);
+    neighbors.insert(outputState);
+    }
+    
+
+
+    
+    //auto neighbors = 
 
     // Hint: Look at PuzzleState.h
     // =====================================================================
@@ -546,24 +592,29 @@ std::list<PuzzleState> puzzleBFS(const PuzzleState& start, const PuzzleState& go
     for (auto neighbor : neighbors) {
 
       // ==================================================================
-      // TODO: Your code here!
+
       // Check whether the neighbor has already been visited.
-      bool neighborWasAlreadyVisited = false; // Change this...
+      bool neighborWasAlreadyVisited = false; 
+       if(visitedSet.find(neighbor) != visitedSet.end()){
+        neighborWasAlreadyVisited = true;
+      }
       // ==================================================================
 
       if (!neighborWasAlreadyVisited) {
 
+
         // ================================================================
         // TODO: Your code here!
 
-        // Record that the curState is the predecessor of the neighbor point,
-        // since curState has just led to the discovery of this neighbor for
+        pred[neighbor] = curState;
+        // Record that the curPoint is the predecessor of the neighbor point,
+        // since curPoint has just led to the discovery of this neighbor for
         // the first time.
         // ...
-
+        visitedSet.insert(neighbor);
         // Add neighbor to the visited set.
         // ...
-
+        exploreQ.push(neighbor);
         // Push neighbor into the exploration queue.
         // ...
 
